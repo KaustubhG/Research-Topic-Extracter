@@ -12,7 +12,9 @@ import java.util.Map.Entry;
 
 import rake.GenerateCandidateKeywords;
 import rake.GenerateWordScores;
-
+/*
+ * Contains Keyword extraction algorithms
+ */
 public class KeywordUtil {
 
 	// generate List of (Map of document term freq)

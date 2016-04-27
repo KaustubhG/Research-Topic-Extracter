@@ -21,7 +21,6 @@ public class TopicIdentifier {
 
 		parser = new XMLParser("acmccs.xml");
 		concepts = parser.parseDocument();
-		System.out.println(concepts);
 	}
 
 	public HashMap<String, Integer> getTopic(String path) throws IOException {
@@ -32,7 +31,7 @@ public class TopicIdentifier {
 			while ((sCurrentLine = br.readLine()) != null) {
 				keywords.add(sCurrentLine);
 			}
-		} catch (FileNotFoundException e ){
+		} catch (FileNotFoundException e) {
 			return null;
 		}
 		return getTopicFromString(keywords);
@@ -54,16 +53,16 @@ public class TopicIdentifier {
 					if (weights.containsKey(concept_name)) {
 						int weight = weights.get(concept_name);
 						weights.put(concept_name, ++weight);
-					}
-					else weights.put(concept_name, 1);
+					} else
+						weights.put(concept_name, 1);
 				}
 			}
 
 		}
-		
+
 		List<Entry<String, Integer>> greatest = Util.findGreatest(weights, 3);
 		HashMap<String, Integer> result = new HashMap<>();
-		for(Entry<String, Integer> entry : greatest){
+		for (Entry<String, Integer> entry : greatest) {
 			result.put(entry.getKey(), entry.getValue());
 		}
 		return result;

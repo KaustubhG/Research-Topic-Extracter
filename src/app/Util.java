@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Map.Entry;
-
+/*
+ * Contains utility methods
+ */
 public class Util {
 	public static <K, V extends Comparable<? super V>> List<Entry<K, V>>
 

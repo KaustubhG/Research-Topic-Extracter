@@ -9,21 +9,25 @@ import java.util.Map.Entry;
 
 public class Main {
 
-	// each entry is a Map of <term, freq in the document>
+	// Each entry is a Map<term, freq> of term-frequencies in a document
 	public static ArrayList<HashMap<String, Double>> documentTerms_mapList;
 	public static final int N = 10;
+	// FilePath of professor-usernames file
 	public static String filePathName = "D:\\Acads\\NLP_Proj_4-2\\proj_files\\usernames";
+	// College website
 	public static String baseUrl = "http://www.bits-pilani.ac.in/Goa";
+	// FolderPath where research text is to be saved
 	public static String localPathName = "D:\\Acads\\NLP_Proj_4-2\\proj_files\\researchPageText";
 
 	public static void main(String[] args) throws Exception {
 
 		// Extracts ResearchPageText of profs and puts it in a file under the localPathName
-		// ResearchTextExtracter extracter = new ResearchTextExtracter(filePathName, baseUrl);
-		// extracter.extractResearchInformation(localPathName);
+		ResearchTextExtracter extracter = new ResearchTextExtracter(filePathName, baseUrl);
+		extracter.extractResearchInformation(localPathName);
 
 		documentTerms_mapList = KeywordUtil.generateTermFreq(localPathName);
-		// KeywordUtil.addToStopList("SmartStoplist.txt", KeywordUtil.genDynamicStopWords(documentTerms_mapList));
+		//Excecute only once, else it will keep appending the same stop-words.
+		//KeywordUtil.addToStopList("SmartStoplist.txt", KeywordUtil.genDynamicStopWords(documentTerms_mapList));
 
 		File folder = new File(localPathName);
 		for (File file : folder.listFiles()) {

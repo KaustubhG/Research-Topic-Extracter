@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// identify topics of Computer Science Faculty
+		// FilePath of cs-faculty usernames
 		String filePath = "D:\\Acads\\NLP_Proj_4-2\\proj_files\\cs_faculty.txt";
 		ArrayList<String> cs_faculty = new ArrayList<>();
 
@@ -28,6 +28,7 @@ public class Main {
 			throw new RuntimeException("Error parsing filePathName containing cs_faculty");
 		}
 
+		// Identify topics by comparing the keywords with ACM CCS
 		TopicIdentifier topicIdentifier = new TopicIdentifier();
 		String baseUrl = "D:\\Acads\\NLP_Proj_4-2\\proj_files\\researchPageKeywords\\";
 		File ofile = new File("D:\\Acads\\NLP_Proj_4-2\\proj_files\\cs_faculty_research_topics.txt");
@@ -49,6 +50,7 @@ public class Main {
 		} catch (Exception e1) {
 			throw new RuntimeException("couldn't open file");
 		}
+		System.out.println("Done");
 
 	}
 }
