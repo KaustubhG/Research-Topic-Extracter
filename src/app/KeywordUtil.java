@@ -2,11 +2,13 @@ package app;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 
 import rake.GenerateCandidateKeywords;
 import rake.GenerateWordScores;
@@ -28,6 +30,39 @@ public class KeywordUtil {
 		}
 
 		return documentTerms_mapList;
+	}
+
+	// Generate stop-words from document corpus with idf-values = 0.0
+	public static ArrayList<String> genDynamicStopWords(ArrayList<HashMap<String, Double>> documentTerms_mapList) {
+		ArrayList<String> stop_words = new ArrayList<>();
+		HashMap<String, Double> test = new HashMap<>();
+		for (HashMap<String, Double> map : documentTerms_mapList) {
+			for (String term : map.keySet()) {
+				double idf_val = getIDF(term, documentTerms_mapList);
+				
+				if (idf_val == 0.0) {
+					stop_words.add(term);
+				}
+				else test.put(term, (-idf_val));
+			}
+		}
+		//Add top n words also to stop-list
+		for(Entry<String, Double> entry : Util.findGreatest(test, 10)){
+			stop_words.add(entry.getKey());
+		}
+		return stop_words;
+	}
+
+	public static void addToStopList(String filepath, ArrayList<String> stop_words) throws Exception {
+		// save keywords to file
+		File ofile = new File(filepath);
+		FileOutputStream fos;
+		fos = new FileOutputStream(ofile, true);
+		for(String stopWord : stop_words){
+			fos.write(new String("\n").getBytes());
+			fos.write(stopWord.getBytes());
+		}
+		fos.close();
 	}
 
 	// calculate term freqs for a document

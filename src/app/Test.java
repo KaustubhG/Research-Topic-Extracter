@@ -13,8 +13,8 @@ public class Test {
 		// TODO Auto-generated method stub
 
 		String baseUrl = "http://www.bits-pilani.ac.in/Goa";
-		Document profile = Jsoup.connect(baseUrl+"/tsrkp/profile").get();
-		
+		Document profile = Jsoup.connect(baseUrl+"/ashwin/profile").get();
+		System.out.println(getResearchLink(profile));
 		Elements links = profile.select("a[href]");
 
 		for (Element link : links) {	
@@ -24,6 +24,20 @@ public class Test {
 			System.out.println("-------------");
 			
 		}
+	}
+	public static String getResearchLink(Document profile) {
+		Elements links = profile.select("a[href]");
+		String url = "";
+		for (Element link : links) {	
+			if(link.text().matches("((.*)[Rr]esearch(.*))")){
+				url = link.attr("href");
+			}
+			if(link.text().matches("((.*)[Rr]esearch(.*)[Ii]nterest(.*))")){
+				url = link.attr("href");
+			}
+			
+		}
+		return url;
 	}
 
 }

@@ -2,13 +2,10 @@ package app;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-
-import ccs.TopicIdentifier;
 
 public class Main {
 
@@ -26,12 +23,13 @@ public class Main {
 		// extracter.extractResearchInformation(localPathName);
 
 		documentTerms_mapList = KeywordUtil.generateTermFreq(localPathName);
+		// KeywordUtil.addToStopList("SmartStoplist.txt", KeywordUtil.genDynamicStopWords(documentTerms_mapList));
 
 		File folder = new File(localPathName);
 		for (File file : folder.listFiles()) {
+			// Get keywords from researchPageText of each prof
 			HashMap<ArrayList<String>, Double> keyword_scores = KeywordUtil.getRAKEKeywords(file.getAbsolutePath());
 			List<Entry<ArrayList<String>, Double>> greatest = Util.findGreatest(keyword_scores, N);
-
 			HashMap<String, Double> idf_values = new HashMap<>();
 			for (Entry<ArrayList<String>, Double> entry : greatest) {
 				for (String keyword : entry.getKey()) {
@@ -40,16 +38,13 @@ public class Main {
 						idf_values.put(keyword, val);
 				}
 			}
-			// System.out.println(file.getName());
-			if (file.getName().equals("biju"))
-				System.out.println(idf_values);
-			List<Entry<String, Double>> filter = Util.findGreatest(idf_values, 100);
-			// save researchTopic keywords to file
+			List<Entry<String, Double>> filteredKeywords = Util.findGreatest(idf_values, 100);
+			// save keywords to file
 			String path = "D:\\Acads\\NLP_Proj_4-2\\proj_files\\researchPageKeywords";
 			File ofile = new File(path + "\\" + file.getName());
 			FileOutputStream fos;
-			fos = new FileOutputStream(ofile, true);
-			for (Entry<String, Double> entry : filter) {
+			fos = new FileOutputStream(ofile, false);
+			for (Entry<String, Double> entry : filteredKeywords) {
 				fos.write(entry.getKey().getBytes());
 				fos.write(new String("\n").getBytes());
 			}

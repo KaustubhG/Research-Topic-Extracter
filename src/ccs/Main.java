@@ -2,7 +2,6 @@ package ccs;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,11 +30,11 @@ public class Main {
 
 		TopicIdentifier topicIdentifier = new TopicIdentifier();
 		String baseUrl = "D:\\Acads\\NLP_Proj_4-2\\proj_files\\researchPageKeywords\\";
-		File ofile = new File("D:\\Acads\\NLP_Proj_4-2\\proj_files\\cs_faculty_research_topics");
+		File ofile = new File("D:\\Acads\\NLP_Proj_4-2\\proj_files\\cs_faculty_research_topics.txt");
 		FileOutputStream fos;
 
 		try {
-			fos = new FileOutputStream(ofile, true);
+			fos = new FileOutputStream(ofile, false);
 			for (String prof : cs_faculty) {
 				try {
 					fos.write(prof.getBytes());

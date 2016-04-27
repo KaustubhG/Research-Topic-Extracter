@@ -1,6 +1,7 @@
 package ccs;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +32,8 @@ public class TopicIdentifier {
 			while ((sCurrentLine = br.readLine()) != null) {
 				keywords.add(sCurrentLine);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (FileNotFoundException e ){
+			return null;
 		}
 		return getTopicFromString(keywords);
 	}
